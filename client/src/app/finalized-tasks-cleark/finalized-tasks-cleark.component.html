@@ -1,0 +1,18 @@
+<table class="ui celled striped table">
+<thead>
+	<tr>
+	<th>Contract Number</th>
+	<th>Number of Available Tasks</th>
+</tr></thead>
+<tbody>
+	<tr *ngFor="let task of tasks | async">
+		<td (click)="clickTableRow(task)" [ngClass]="{ selected: currentTask === task }">
+			{{ task.contractId }}
+		</td>
+		<td (click)="clickTableRow(task)" [ngClass]="{ selected: currentTask === task }">
+			{{ task.noSubtasks }}
+		</td>
+	</tr>
+</tbody>
+</table>
+<app-subtask-table *ngIf="taskSelected" [task]="currentTask"></app-subtask-table>

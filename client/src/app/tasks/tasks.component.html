@@ -1,0 +1,84 @@
+
+<div class="ui menu">
+	<div class="item header">
+		<h2>Tasks</h2>
+	</div>
+  <div class="item right">
+  	<a routerLink="/newtask">
+			<div class="ui primary button"><i class="plus icon"></i>New Task</div>
+		</a>
+	</div>
+</div>
+
+<form class="ui form">
+  <div class="field">
+    <label>Search</label>
+		<input type="text" [(ngModel)]="searchQuery" placeholder="Search" name="search">
+	</div>
+</form>
+
+<table class="ui celled striped table">
+<thead>
+	<tr>
+	<th>Id</th>
+	<th class="single line">Name</th>
+	<th>Description</th>
+	<th>Contract</th>
+	<th>Status</th>
+	<th>Actions</th>
+</tr></thead>
+<tbody>
+	<tr *ngFor="let task of tasks | async">
+		<td>
+			{{ task.pk }}
+		</td>
+		<td>
+			{{ task.name }}
+		</td>
+		<td class="single line">
+			{{ task.description }}
+		</td>
+		<td>
+			{{ task.contractId }}
+		</td>
+		<td>
+			{{ task.status }}
+		</td>
+		<td class="right aligned">
+			<div class="ui button small" (click)="editTask(task)"><i class="pencil alternate icon"></i>Edit</div>
+			<div class="ui red button small" (click)="deleteTask(task.pk)"><i class="trash alternate icon"></i>Delete</div>
+		</td>
+	</tr>
+</tbody>
+</table>
+
+<button class="ui teal button" (click)="getTasks()"><i class="download icon"></i>Get Tasks</button>
+
+
+<div class="ui modal">
+  <div class="header">Edit Task</div>
+  <div *ngIf="currentTask" class="content">
+		<form class="ui form">
+		  <div class="field">
+		    <label>Name</label>
+				<input type="text" [(ngModel)]="currentTask.name" placeholder="Name" name="name">
+			</div>
+		  <div class="field">
+		    <label>Description</label>
+				<input type="text" [(ngModel)]="currentTask.description" placeholder="Description" name="description">
+			</div>
+		  <div class="field">
+		    <label>Contract</label>
+				<input type="number" [(ngModel)]="currentTask.contractId" placeholder="Contract" name="contractId">
+			</div>
+		  <div class="field">
+		    <label>Status</label>
+				<input type="number" [(ngModel)]="currentTask.status" placeholder="Status" name="status">
+			</div>
+		</form>
+  </div>
+  <div class="actions">
+		<button class="ui primary approve button" (click)="updateTask(currentTask)">Save</button>
+    <div class="ui cancel button">Cancel</div>
+  </div>
+</div>
